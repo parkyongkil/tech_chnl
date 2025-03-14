@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kcredit.tech.chnl.user.plus.PlusMapper">
+
+    <select id="nextval">
+        SELECT nextval(#{sequenceName})
+    </select>
+
+    <select id="nextvalUserNo">
+        select nextval('tech_chanl.seq_user_no')
+    </select>
+
+    <select id="searchUserListByXmlQuery">
+        SELECT *
+        FROM tech_chnl.user
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="no        >  0"   ><![CDATA[ no = #{no}                   ]]></if>
+            <if test="name      != null"><![CDATA[ AND name ~ #{name}           ]]>/* = oracle regexp_like */ </if>
+            <if test="grade     != null"><![CDATA[ AND grade = #{grade}         ]]></if>
+            <if test="startDate != null"><![CDATA[ AND reg_date >= #{startDate, jdbcType=TIMESTAMP} ]]>/* 반드시 대문자 TIMESTAMP 로 입력하여야 합니다. type을 설정하지 않으면 밀리세컨드가 사라집니다.(특히 insert, update) 시 문제발생 */</if>
+            <if test="endDate   != null"><![CDATA[ AND reg_date <= #{endDate  , jdbcType=TIMESTAMP} ]]></if>
+        </trim>
+        ORDER BY NO
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+</mapper>

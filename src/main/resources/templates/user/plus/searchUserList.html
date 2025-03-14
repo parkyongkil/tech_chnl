@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>searchUserList</title>
+</head>
+<body>
+
+<table th:cellpadding="4">
+    <tr>
+        <td>No</td>
+        <td>Name</td>
+        <td>Grade</td>
+        <td>RegDate</td>
+    </tr>
+
+    <tr th:each="user : ${searchUserList}">
+        <td th:text="${user.no}"/>
+        <td th:text="${user.name}"/>
+        <td th:text="${user.grade}"/>
+        <td th:text="${#dates.format(user.regDate, 'yyyy-MM-dd hh-mm-ss')}"/>
+    </tr>
+
+</table>
+
+</body>
+</html>

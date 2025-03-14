@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: tech_chnl
+Bundle-SymbolicName: tech_chnl
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Automatic-Module-Name: tech.chnl
+Export-Package: .,
+ kcredit.tech.chnl,
+ kcredit.tech.chnl.p6spy,
+ kcredit.tech.chnl.user.legacy,
+ kcredit.tech.chnl.user.plus,
+ templates.user.legacy,
+ templates.user.plus

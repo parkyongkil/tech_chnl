@@ -1,0 +1,69 @@
+spring:
+  profiles:
+    active: local
+    group:
+      local: common, local
+      test: common, test
+      real: common, real
+
+logging:
+  level:
+    root: info
+
+--- # note
+
+# 아래의 common, local, test, real 을 별도의 파일로 분리하여 작성하여도 무방합니다.
+# /resources/applcation-*.xml 을 시작과 동시에 자동으로 모두 읽은 후 하나로 통합합니다. 즉, 하나의 파일로 작성한 것과 동일합니다.
+# profile(local) 과 설정파일(applcation-local.xml) 이름이 일치하지 않아도 무방합니다.
+# 분리한 파일은 프로파일을 명확히 인식할 수 있도록 작성하여야 합니다.
+# 하나의 파일에 여러개의 프로파일 설정이 가능합니다. 예) 파일1=(local, common, test), 파일2=(real)
+# 하나의 프로파일을 여러개의 파일에 나누어 작성하는 것은 테스트 하지 않았습니다. (merge-update 작동 예상)
+
+--- # common
+spring:
+  config:
+    activate:
+      on-profile: common
+
+  application:
+    name: tech_chnl
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+
+--- # local
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:postgresql://192.168.101.40:5432/kcredit
+    username: kcredit
+    #password: kcredit
+    password: ENC(sQIqV+ZbbIsiwwmpji3/Pw==)
+
+--- # test
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.101.40:5432/kcredit
+    username: kcredit
+    password: kcredit
+
+--- # real
+spring:
+  config:
+    activate:
+      on-profile: real
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.101.40:5432/kcredit
+    username: kcredit
+    password: kcredit
