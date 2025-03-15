@@ -14,20 +14,6 @@ public class PlusService {
 
     private final PlusMapper plusMapper;
 
-    public PlusUser insertUser(PlusUser user) {
-        plusMapper.insert(user);
-        return user;
-    }
-
-    public PlusUser updateUser(PlusUser user) {
-        plusMapper.updateById(user);
-        return user;
-    }
-
-    public PlusUser findUser(PlusUser user) {
-        return plusMapper.selectById(user.getNo());
-    }
-
     public Page<PlusUser> searchUserList(Page<PlusUser> page, LegacySearchUserListVO search) {
         LambdaQueryWrapper<PlusUser> w = Wrappers.lambdaQuery();
         if (search.getNo() > 0) w.eq(PlusUser::getNo, search.getNo());

@@ -39,7 +39,7 @@ spring:
 
   datasource:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:postgresql://192.168.101.40:5432/kcredit
+    url: jdbc:p6spy:postgresql://localhost:5432/kcredit
     username: kcredit
     #password: kcredit
     password: ENC(sQIqV+ZbbIsiwwmpji3/Pw==)
@@ -52,7 +52,7 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.101.40:5432/kcredit
+    url: jdbc:postgresql://localhost:5432/kcredit
     username: kcredit
     password: kcredit
 
@@ -64,6 +64,6 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.101.40:5432/kcredit
+    url: jdbc:postgresql://localhost:5432/kcredit
     username: kcredit
     password: kcredit
