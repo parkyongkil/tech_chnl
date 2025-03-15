@@ -25,6 +25,10 @@ CREATE DATABASE kcredit
 SELECT current_database();
 ALTER ROLE kcredit IN DATABASE kcredit SET search_path="$user";
 
+
+
+/* database kcredit 으로 접속 */
+
 /* schema 생성 */
 CREATE SCHEMA tech_chnl AUTHORIZATION kcredit;
 SELECT current_schema();
@@ -46,8 +50,8 @@ CREATE TABLE tech_chnl."user" (
                                   "name" varchar NULL,
                                   pwd varchar NULL,
                                   grade varchar NOT NULL,
-                                  reg_date date NULL,
-                                  upd_date date NULL,
+                                  reg_date timestamp NULL,
+                                  upd_date timestamp NULL,
                                   CONSTRAINT users_pk PRIMARY KEY (no)
 );
 
