@@ -7,6 +7,7 @@ import kcredit.tech.chnl.user.legacy.LegacyUserGrade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Date;
@@ -52,7 +53,7 @@ public class PlusController {
         Page<PlusUser> page2 = plusService.searchUserList(page1, search);
 
         // page1 과 page2 는 동일한 객체입니다.
-        boolean samepage = page1 == page2; // true
+        Assert.isTrue(page1 == page2, "Page1,2 객체가 서로 같지 않습니다.");
 
         page1.getPages();
         // page1 전체를 넘깁니다. (화면참조)
