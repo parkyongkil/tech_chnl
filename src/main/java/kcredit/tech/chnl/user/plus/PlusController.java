@@ -55,7 +55,6 @@ public class PlusController {
         // page1 과 page2 는 동일한 객체입니다.
         Assert.isTrue(page1 == page2, "Page1,2 객체가 서로 같지 않습니다.");
 
-        page1.getPages();
         // page1 전체를 넘깁니다. (화면참조)
         model.addAttribute("page1", page1);
     }
