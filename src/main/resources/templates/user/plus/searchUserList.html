@@ -12,13 +12,15 @@
         <td>Name</td>
         <td>Grade</td>
         <td>RegDate</td>
+        <td>UpdDate</td>
     </tr>
-    <!--/*@thymesVar user="no" type="kcredit.tech.chnl.user.plus.PlusUser"*/-->
+
     <tr th:each="user : ${page1.records}">
         <td th:text="${user.no}"/>
         <td th:text="${user.name}"/>
         <td th:text="${user.grade}"/>
-        <td th:text="${#dates.format(user.regDate, 'yyyy-MM-dd hh-mm-ss')}"/>
+        <td th:text="${#dates.format(user.regDate, 'yyyy-MM-dd HH:mm:ss.SSS')}"/>
+        <td th:text="${#dates.format(user.updDate, 'yyyy-MM-dd HH:mm:ss.SSS')}"/>
     </tr>
 
 </table>

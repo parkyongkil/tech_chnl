@@ -1,10 +1,12 @@
 package kcredit.tech.chnl.user.legacy;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
 @Data
+@Accessors(chain = true)
 public class LegacySearchUserListVO {
     private long no;
     private String name;

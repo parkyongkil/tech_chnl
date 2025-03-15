@@ -12,7 +12,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LegacyController {
 
-    private final LegacyService legacyService; // @Autowrired 대신에 @RequiredArgsConstructor 를 사용합니다. 반드시 private final 이어야 합니다.
+    // @Autowrired 대신에 @RequiredArgsConstructor 를 사용합니다. 반드시 private final 이어야 합니다.
+    private final LegacyService legacyService;
 
     @GetMapping("user/legacy/hello")
     public void hello(Model model) {

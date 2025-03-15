@@ -5,20 +5,22 @@
     <title>searchUserListByXmlQuery</title>
 </head>
 <body>
-
+<!--/*@thymesVar id="searchUserList" type="java.util.List<kcredit.tech.chnl.user.plus.PlusUser>"*/-->
 <table th:cellpadding="4">
     <tr>
         <td>No</td>
         <td>Name</td>
         <td>Grade</td>
         <td>RegDate</td>
+        <td>UpdDate</td>
     </tr>
 
     <tr th:each="user : ${searchUserList}">
         <td th:text="${user.no}"/>
         <td th:text="${user.name}"/>
         <td th:text="${user.grade}"/>
-        <td th:text="${#dates.format(user.regDate, 'yyyy-MM-dd hh-mm-ss')}"/>
+        <td th:text="${#dates.format(user.regDate, 'yyyy-MM-dd HH:mm:ss.SSS')}"/>
+        <td th:text="${#dates.format(user.updDate, 'yyyy-MM-dd HH:mm:ss.SSS')}"/>
     </tr>
 
 </table>

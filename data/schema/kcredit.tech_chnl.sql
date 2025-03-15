@@ -50,7 +50,7 @@ CREATE TABLE tech_chnl."user" (
                                   "name" varchar NULL,
                                   pwd varchar NULL,
                                   grade varchar NOT NULL,
-                                  reg_date timestamp NULL,
+                                  reg_date timestamp NULL DEFAULT now(),
                                   upd_date timestamp NULL,
                                   CONSTRAINT users_pk PRIMARY KEY (no)
 );

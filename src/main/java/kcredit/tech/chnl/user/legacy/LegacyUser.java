@@ -11,4 +11,5 @@ public class LegacyUser {
     private String pwd;
     private LegacyUserGrade grade;
     private Date regDate;
+    private Date updDate;
 }
