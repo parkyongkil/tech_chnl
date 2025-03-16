@@ -59,13 +59,14 @@ public class BoundSql {
     }
 
     public String getSql() {
+        if (id == null) return sql;
         StringBuilder sb = new StringBuilder();
         for (StackTraceElement t : Thread.currentThread().getStackTrace()) {
             String cn = t.getClassName();
             if (cn.startsWith("kcredit."))
                 sb.append("/* %s.%s.%d */\n".formatted(cn, t.getMethodName(), t.getLineNumber()));
         }
-        if (id != null) sb.append("/* ").append(id).append(" */\n");
+        sb.append("/* ").append(id).append(" */\n");
         sb.append(sql);
         return sb.toString();
     }
