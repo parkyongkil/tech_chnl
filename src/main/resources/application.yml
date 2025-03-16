@@ -5,16 +5,7 @@ spring:
   application:
     name: tech_chnl
 
-logging:
-  level:
-    root: info
-
-
 --- # spy
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: false
 logging:
   level:
     kcredit.tech.chnl: debug
@@ -30,8 +21,8 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/kcredit
     username: kcredit
-    #password: kcredit
-    password: ENC(sQIqV+ZbbIsiwwmpji3/Pw==)
+    password: kcredit
+    #password: ENC(sQIqV+ZbbIsiwwmpji3/Pw==)
 
 
 --- # test

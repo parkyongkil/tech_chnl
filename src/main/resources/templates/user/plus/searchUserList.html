@@ -5,7 +5,7 @@
     <title>searchUserList</title>
 </head>
 <body>
-<!--/*@thymesVar id="page1" type="com.baomidou.mybatisplus.extension.plugins.pagination.Page<kcredit.tech.chnl.user.plus.PlusUser>"*/-->
+<!--/*@thymesVar id="page" type="com.baomidou.mybatisplus.extension.plugins.pagination.Page<kcredit.tech.chnl.user.plus.PlusUser>"*/-->
 <table th:cellpadding="4">
     <tr>
         <td>No</td>
@@ -15,7 +15,7 @@
         <td>UpdDate</td>
     </tr>
 
-    <tr th:each="user : ${page1.records}">
+    <tr th:each="user : ${page.records}">
         <td th:text="${user.no}"/>
         <td th:text="${user.name}"/>
         <td th:text="${user.grade}"/>
@@ -26,10 +26,10 @@
 </table>
 
 <table th:cellpadding="4">
-    <tr><td>pageSize</td><td th:text="${page1.size}"></td></tr>
-    <tr><td>TotalCount</td><td th:text="${page1.total}"></td></tr>
-    <tr><td>CurrentPageNo</td><td th:text="${page1.current}"></td></tr>
-    <tr><td>TotalPageCount</td><td th:text="${page1.pages}"></td></tr>
+    <tr><td>pageSize</td><td th:text="${page.size}"></td></tr>
+    <tr><td>TotalCount</td><td th:text="${page.total}"></td></tr>
+    <tr><td>CurrentPageNo</td><td th:text="${page.current}"></td></tr>
+    <tr><td>TotalPageCount</td><td th:text="${page.pages}"></td></tr>
 </table>
 
 </body>

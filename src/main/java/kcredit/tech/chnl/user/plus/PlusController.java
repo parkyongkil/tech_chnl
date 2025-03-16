@@ -1,14 +1,16 @@
 package kcredit.tech.chnl.user.plus;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import kcredit.tech.chnl.user.legacy.LegacyPage;
 import kcredit.tech.chnl.user.legacy.LegacySearchUserListVO;
 import kcredit.tech.chnl.user.legacy.LegacyUserGrade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.Date;
 import java.util.List;
@@ -36,27 +38,22 @@ public class PlusController {
     }
 
     @GetMapping("user/plus/searchUserList")
-    public void searchUserList(Model model) {
+    public void searchUserList(Model model, @ModelAttribute("search") LegacySearchUserListVO search, @ModelAttribute("page") Page<PlusUser> page) {
 
-        LegacyPage legacyPage = (LegacyPage) model.getAttribute("page");
-        LegacySearchUserListVO search = (LegacySearchUserListVO) model.getAttribute("searchUser");
-
-        if (legacyPage == null) legacyPage = new LegacyPage();
         if (search == null) search = new LegacySearchUserListVO().setEndDate(new Date());
+        if (page == null) page = new Page<PlusUser>().addOrder(OrderItem.asc("name"));
 
-        Page<PlusUser> page1 = new Page<PlusUser>()
-                .setSize(legacyPage.getLimit())
-                .setCurrent(legacyPage.getOffset());
-
-
-        // 쿼리 입출력을 조작하는 부분을 service로 구현하여 재활용
-        Page<PlusUser> page2 = plusService.searchUserList(page1, search);
-
-        // page1 과 page2 는 동일한 객체입니다.
-        Assert.isTrue(page1 == page2, "Page1,2 객체가 서로 같지 않습니다.");
-
+        LambdaQueryWrapper<PlusUser> wrapper = Wrappers.<PlusUser>lambdaQuery();
+        if (search.getNo() > 0) wrapper.eq(PlusUser::getNo, search.getNo());
+        if (search.getName() != null) wrapper.like(PlusUser::getName, search.getName());
+        if (search.getGrade() != null) wrapper.eq(PlusUser::getGrade, search.getGrade());
+        if (search.getStartDate() != null) wrapper.ge(PlusUser::getRegDate, search.getStartDate());
+        if (search.getEndDate() != null) wrapper.ge(PlusUser::getRegDate, search.getEndDate());
+        page.setSearchCount(true);
+        plusMapper.selectPage(page, wrapper);
+        page.setTotal(plusMapper.selectCount(wrapper));
         // page1 전체를 넘깁니다. (화면참조)
-        model.addAttribute("page1", page1);
+        model.addAttribute("page", page);
     }
 
     @GetMapping("user/plus/searchUserListByXmlQuery")

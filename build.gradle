@@ -24,12 +24,16 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'com.baomidou:mybatis-plus-spring-boot3-starter:3.5.7'
-    implementation 'com.baomidou:mybatis-plus-generator:3.5.9' // entity java 생성위한 툴로 라이브러리 배포대상은 아님
-    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.10.0'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.3.4'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.3.4'
+    implementation 'com.baomidou:mybatis-plus-spring-boot3-starter:3.5.9'
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
+    implementation 'org.hotswapagent:hotswap-agent:2.0.1'
+    implementation 'com.github.bbottema:jetbrains-runtime-annotations:1.0.1'
+    // implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+    // implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.10.0'
+
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
