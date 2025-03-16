@@ -14,14 +14,14 @@
         SELECT *
         FROM tech_chnl.user
         <trim prefix="WHERE" prefixOverrides="AND">
-            <if test="no        >  0"   ><![CDATA[ no = #{no}                   ]]></if>
-            <if test="name      != null"><![CDATA[ AND name ~ #{name}           ]]>/* = oracle regexp_like */ </if>
-            <if test="grade     != null"><![CDATA[ AND grade = #{grade}         ]]></if>
-            <if test="startDate != null"><![CDATA[ AND reg_date >= #{startDate, jdbcType=TIMESTAMP} ]]>/* 반드시 대문자 TIMESTAMP 로 입력하여야 합니다. type을 설정하지 않으면 밀리세컨드가 사라집니다.(특히 insert, update) 시 문제발생 */</if>
-            <if test="endDate   != null"><![CDATA[ AND reg_date <= #{endDate  , jdbcType=TIMESTAMP} ]]></if>
+            <if test="data.no        >  0"   ><![CDATA[ no = #{data.no}                   ]]></if>
+            <if test="data.name      != null"><![CDATA[ AND name ~ #{data.name}           ]]></if>
+            <if test="data.grade     != null"><![CDATA[ AND grade = #{data.grade}         ]]></if>
+            <if test="data.startDate != null"><![CDATA[ AND reg_date >= #{data.startDate} ]]></if>
+            <if test="data.endDate   != null"><![CDATA[ AND reg_date <= #{data.endDate}   ]]></if>
         </trim>
         ORDER BY NO
-        LIMIT #{limit} OFFSET #{offset}
+        LIMIT #{data.limit} OFFSET #{data.offset}
     </select>
 
 </mapper>

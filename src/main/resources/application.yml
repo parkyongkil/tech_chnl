@@ -14,8 +14,11 @@ logging:
 decorator:
   datasource:
     p6spy:
-      enable-logging: true
-
+      enable-logging: false
+logging:
+  level:
+    kcredit.tech.chnl: debug
+    sql: debug
 
 --- # local
 spring:

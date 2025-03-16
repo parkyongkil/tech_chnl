@@ -3,6 +3,7 @@ package kcredit.tech.chnl.user.plus;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import kcredit.tech.chnl.user.legacy.LegacySearchUserListVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface PlusMapper extends BaseMapper<PlusUser> {
     // QueryWrapper 문법을 배워야 합니다.
 
     // 전통방식의 xml 쿼리 이용, 기존에 구현한 쿼리서비스를 포팅할 때 유용합니다.
-    List<PlusUser> searchUserListByXmlQuery(LegacySearchUserListVO vo);
+    List<PlusUser> searchUserListByXmlQuery(@Param("data") LegacySearchUserListVO vo);
 }
