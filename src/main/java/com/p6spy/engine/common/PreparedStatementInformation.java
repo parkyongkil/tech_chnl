@@ -54,8 +54,7 @@ public class PreparedStatementInformation extends StatementInformation implement
                 // replace with parameter value
                 Value value = parameterValues.get(currentParameter);
                 sb.append(value != null ? value.toString() : new Value().toString());
-                sb.append(" /* ").append(currentParameter).append(" */");
-                currentParameter++;
+                sb.append(" /*").append(++currentParameter).append("*/");
             } else {
                 sb.append(character);
             }
