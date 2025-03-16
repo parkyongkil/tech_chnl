@@ -43,11 +43,9 @@ public class PlusController {
 
         if (legacyPage == null) legacyPage = new LegacyPage();
         if (search == null) search = new LegacySearchUserListVO().setEndDate(new Date());
-
         Page<PlusUser> page1 = new Page<PlusUser>()
                 .setSize(legacyPage.getLimit())
                 .setCurrent(legacyPage.getOffset());
-
 
         // 쿼리 입출력을 조작하는 부분을 service로 구현하여 재활용
         Page<PlusUser> page2 = plusService.searchUserList(page1, search);
