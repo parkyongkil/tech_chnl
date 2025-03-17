@@ -1,20 +1,26 @@
 package kcredit.tech.chnl.user.legacy;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
 public interface LegacyMapper {
 
-    @Select("select * from tech_chnl.user where no > 0 limit 1000")
-    List<LegacyUser> selectAllUserListByAnnotation(); // By Annotation Query
+    @Select("select nextval('tech_chnl.seq_user_no') as no")
+    long nextvalSeqUserNo();
 
-    List<LegacyUser> selectAllUserList(); // By Mapper.Xml Query
+    @Select("select * from tech_chnl.user where no = #{no}")
+    LegacyUser selectUser(@Param("no") long no);
 
-    List<LegacyUser> searchUserListWithSigleParameter(LegacySearchUserListVO legacySearchUserListVO);
+    @Select("delete from tech_chnl.user where no = #{no}")
+    Integer deleteUser(@Param("no") long no);
 
-    List<LegacyUser> searchUserListWithMuliParameters(@Param("data") LegacySearchUserListVO legacySearchUserListVO, @Param("page") LegacyPage legacyPage);
+    @Insert("INSERT INTO tech_chnl.user (name, pwd, grade) values (#{name}, #{pwd}, #{grade})")
+    Integer insertUser(LegacyUser user);
+
+    @Update("UPDATE tech_chnl.user set name = #{name}, pwd = #{pwd}, grade = #{grade}, upd_date = now() where no = #{no}")
+    Integer updateUser(LegacyUser user);
+
+    List<LegacyUser> searchUserList(@Param("data") LegacySearchUser data, @Param("page") LegacyPage page);
 }

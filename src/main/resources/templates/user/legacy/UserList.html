@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>searchUserList</title>
+    <title>UserList</title>
 </head>
 <body>
 
@@ -15,8 +15,8 @@
         <td>UpdDate</td>
     </tr>
 
-    <!--/*@thymesVar id="searchUserList" type="java.util.List<kcredit.tech.chnl.user.legacy.LegacyUser>"*/-->
-    <tr th:each="user : ${searchUserList}">
+    <!--/*@thymesVar id="userList" type="java.util.List<kcredit.tech.chnl.user.legacy.LegacyUser>"*/-->
+    <tr th:each="user : ${userList}">
         <td th:text="${user.no}"/>
         <td th:text="${user.name}"/>
         <td th:text="${user.grade}"/>

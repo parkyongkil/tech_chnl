@@ -5,6 +5,8 @@ spring:
   application:
     name: tech_chnl
 
+mybatis:
+  mapper-locations: classpath:mapper/**/*Mapper.xml
 
 --- # spy
 logging:
@@ -37,7 +39,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/kcredit
     username: kcredit
     password: kcredit
-
 
 --- # real
 spring:

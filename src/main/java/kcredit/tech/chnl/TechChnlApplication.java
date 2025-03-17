@@ -1,8 +1,5 @@
 package kcredit.tech.chnl;
 
-import com.baomidou.mybatisplus.annotation.DbType;
-import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
@@ -32,18 +29,5 @@ public class TechChnlApplication {
         config.setPoolSize("1");
         encryptor.setConfig(config);
         return encryptor;
-    }
-
-    /**
-     * 쿼리를 조회하면 자동으로 총건수(selectCount)를 실행하여 page.total 값을 입력합니다.
-     * 총건수 조회를 원하지 않으시면 반드시 page1.setSearchCount(false) 를 설정하셔야 합니다.
-     * Page 객체를 넘길 때만 발생하며 xml 쿼리에도 동일하게 적용됩니다.
-     * 따라서 쿼리문에 paging 관련 구문을 넣으면 안됩니다. (자동으로 넣어줍니다)
-     */
-    @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
-        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.POSTGRE_SQL)); // DB 별1 페이징 방식이 다릅니다.
-        return interceptor;
     }
 }

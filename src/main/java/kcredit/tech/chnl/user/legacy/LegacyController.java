@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -13,35 +15,47 @@ import java.util.List;
 public class LegacyController {
 
     // @Autowrired 대신에 @RequiredArgsConstructor 를 사용합니다. 반드시 private final 이어야 합니다.
-    private final LegacyService legacyService;
+    private LegacyMapper mapper;
 
-    @GetMapping("user/legacy/hello")
-    public void hello(Model model) {
+    @GetMapping("user/legacy/Hello")
+    public String hello(Model model) {
         model.addAttribute("greeting", "Hello World");
+        return "user/legacy/Hello";
     }
 
-    @GetMapping("user/legacy/selectAllUserList")
-    public void selectAllUserList(Model model) {
-        List<LegacyUser> selectAllUserList = legacyService.selectAllUserList();
-        model.addAttribute("selectAllUserList", selectAllUserList);
+    @PostMapping("user/legacy/InsertUser")
+    public String insertUpser(Model model, @ModelAttribute("user") LegacyUser user) {
+        long no = mapper.nextvalSeqUserNo();
+        user.setNo(no);
+        mapper.insertUser(user);
+        model.addAttribute("user", user);
+        return "user/legacy/User";
+    }
+
+    @PostMapping("user/legacy/UpdateUser")
+    public String updateUpser(Model model, @ModelAttribute("user") LegacyUser user) {
+        mapper.updateUser(user);
+        model.addAttribute("user", user);
+        return "user/legacy/User";
+    }
+
+    @GetMapping("user/legacy/DeleteUser/{no}")
+    public String deleteUpser(Model model, @PathVariable("no") long no) {
+        mapper.deleteUser(no);
+        return "user/legacy/UserList";
+    }
+
+    @GetMapping("user/legacy/SelectUser/{no}")
+    public String selectUser(Model model, @PathVariable("no") long no) {
+        LegacyUser user = mapper.selectUser(no);
+        model.addAttribute("user", user);
+        return "user/legacy/User";
     }
 
     @GetMapping("user/legacy/searchUserList")
-    public void searchUserList(Model model) {
-        LegacySearchUserListVO legacySearchUserListVO = new LegacySearchUserListVO();
-        Date startDate = new Date();
-        Date endDate = new Date();
-        startDate.setTime(startDate.getTime() - 86400000L * 90); // before 90 days
-        legacySearchUserListVO.setStartDate(startDate);
-        legacySearchUserListVO.setEndDate(endDate);
-
-        // legacySearchUserListVO.setName("옙");
-        legacySearchUserListVO.setGrade(LegacyUserGrade.A);
-
-        LegacyPage legacyPage = new LegacyPage();
-        legacyPage.setLimit(10);
-
-        List<LegacyUser> searchUserList = legacyService.searchUserList(legacySearchUserListVO, legacyPage);
-        model.addAttribute("searchUserList", searchUserList);
+    public String searchUserList(Model model, @ModelAttribute("search") LegacySearchUser search, @ModelAttribute("page") LegacyPage page) {
+        List<LegacyUser> userList = mapper.searchUserList(search, page);
+        model.addAttribute("userList", userList);
+        return "user/legacy/UserList";
     }
 }

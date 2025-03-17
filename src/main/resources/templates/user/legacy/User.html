@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>userInfo</title>
+    <title>User</title>
 </head>
 <body>
 
@@ -15,8 +15,8 @@
         <td>UpdDate</td>
     </tr>
 
+    <!--/*@thymesVar id="user" type="kcredit.tech.chnl.user.legacy.LegacyUser"*/-->
     <tr>
-        <!--/*@thymesVar id="user" type="kcredit.tech.chnl.user.plus.PlusUser"*/-->
         <td th:text="${user.no}"/>
         <td th:text="${user.name}"/>
         <td th:text="${user.grade}"/>
