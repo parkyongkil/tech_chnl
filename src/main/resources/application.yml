@@ -5,16 +5,8 @@ spring:
   application:
     name: tech_chnl
 
-logging:
-  level:
-    root: info
-
 
 --- # spy
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: false
 logging:
   level:
     kcredit.tech.chnl: debug

@@ -43,7 +43,7 @@ public class TechChnlApplication {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.POSTGRE_SQL)); // DB Thyp에 따라서 페이징 방식이 다릅니다.
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.POSTGRE_SQL)); // DB 별1 페이징 방식이 다릅니다.
         return interceptor;
     }
 }

@@ -14,14 +14,13 @@
         SELECT *
         FROM tech_chnl.user
         <trim prefix="WHERE" prefixOverrides="AND">
-            <if test="data.no        >  0"   ><![CDATA[ no = #{data.no}                   ]]></if>
-            <if test="data.name      != null"><![CDATA[ AND name ~ #{data.name}           ]]></if>
-            <if test="data.grade     != null"><![CDATA[ AND grade = #{data.grade}         ]]></if>
-            <if test="data.startDate != null"><![CDATA[ AND reg_date >= #{data.startDate} ]]></if>
-            <if test="data.endDate   != null"><![CDATA[ AND reg_date <= #{data.endDate}   ]]></if>
+            <if test="search.no        >  0"><![CDATA[ no = #{search.no}                   ]]></if>
+            <if test="search.name      != null"><![CDATA[ AND name ~ #{search.name}           ]]></if>
+            <if test="search.grade     != null"><![CDATA[ AND grade = #{search.grade}         ]]></if>
+            <if test="search.startDate != null"><![CDATA[ AND reg_date >= #{search.startDate} ]]></if>
+            <if test="search.endDate   != null"><![CDATA[ AND reg_date <= #{search.endDate}   ]]></if>
         </trim>
         ORDER BY NO
-        LIMIT #{data.limit} OFFSET #{data.offset}
     </select>
 
 </mapper>

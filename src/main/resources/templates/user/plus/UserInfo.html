@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>searchUserListByXmlQuery</title>
+    <title>userInfo</title>
 </head>
 <body>
-<!--/*@thymesVar id="searchUserList" type="java.util.List<kcredit.tech.chnl.user.plus.PlusUser>"*/-->
+
 <table th:cellpadding="4">
     <tr>
         <td>No</td>
@@ -15,7 +15,8 @@
         <td>UpdDate</td>
     </tr>
 
-    <tr th:each="user : ${searchUserList}">
+    <tr>
+        <!--/*@thymesVar id="user" type="kcredit.tech.chnl.user.plus.PlusUser"*/-->
         <td th:text="${user.no}"/>
         <td th:text="${user.name}"/>
         <td th:text="${user.grade}"/>

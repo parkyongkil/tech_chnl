@@ -1,14 +1,15 @@
 package kcredit.tech.chnl.user.plus;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import kcredit.tech.chnl.user.legacy.LegacyPage;
 import kcredit.tech.chnl.user.legacy.LegacySearchUserListVO;
 import kcredit.tech.chnl.user.legacy.LegacyUserGrade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -17,52 +18,78 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlusController {
 
-    private final PlusService plusService; // Service 를 통해서 Mapper 호출 (입출력 가공이 필요할 때 사용)
-
     private final PlusMapper plusMapper; // Controller 에서 Mapper 를 직접 호출할 때 사용 (기본제공하는 CRUD 직접 사용)
 
-    @GetMapping("user/plus/insertUser")
-    public void insertUser(Model model) {
-        PlusUser user = (PlusUser) model.getAttribute("user");
-        if (user == null) {
-            user = new PlusUser()
-                    .setName("몽난희 " + (int) (Math.ceil(Math.random() * 1000)))
-                    .setGrade(LegacyUserGrade.A);
-        }
-        // baseMapper 에서 기본제공하는 함수가 매우 풍부하여 직접사용합니다. (Mapper 직접호출)
-        // BaseMapper 에서 제공하는 기능을 꼭 확인하여 주시기 바랍니다. (예: insertOrUpdate)
-        plusMapper.insert(user); // 성공하면 자동으로 user.no 에 채번한 시퀀스 값을 넣어 줍니다.
+    @GetMapping({"user/plus/insertUser", "user/plus/updateUser"})
+    public String insertOrUpdateUpser(Model model, @ModelAttribute("user") PlusUser user) {
+
+        if (user.getName() == null || user.getName().isBlank())
+            user.setName("소피아 " + StringUtils.randomAlphanumeric(4)).setGrade(LegacyUserGrade.A);
+
+        plusMapper.insertOrUpdate(user); // 성공하면 자동으로 user.no 에 채번한 시퀀스 값을 넣어 줍니다.
+
         model.addAttribute("user", user);
+
+        return "user/plus/UserInfo";
+    }
+
+    @GetMapping("user/plus/deleteUser")
+    public String deleteUser(Model model, @ModelAttribute("user") PlusUser user) {
+
+        if (user.getNo() == null || user.getNo() < 1) {
+            PlusUser minUser = plusMapper.selectMinUser();
+            if (minUser != null) {
+                plusMapper.deleteById(minUser.getNo());
+                user = minUser;
+            }
+        }
+
+        model.addAttribute("user", user);
+
+        return "user/plus/UserInfo";
+    }
+
+    @GetMapping("user/plus/userInfo")
+    public String userInfo(Model model, @ModelAttribute("user") PlusUser user) {
+
+        PlusUser user2 = plusMapper.selectById(user.getNo());
+        if (user2 != null) user = user2;
+
+        model.addAttribute("user", user);
+
+        return "user/plus/UserInfo";
     }
 
     @GetMapping("user/plus/searchUserList")
-    public void searchUserList(Model model) {
+    public String searchUserList(Model model, @ModelAttribute("page") Page<PlusUser> page, @ModelAttribute("search") LegacySearchUserListVO search) {
 
-        LegacyPage legacyPage = (LegacyPage) model.getAttribute("page");
-        LegacySearchUserListVO search = (LegacySearchUserListVO) model.getAttribute("searchUser");
+        search.setName("");
+        search.setEndDate(new Date());
 
-        if (legacyPage == null) legacyPage = new LegacyPage();
-        if (search == null) search = new LegacySearchUserListVO().setEndDate(new Date());
-        Page<PlusUser> page1 = new Page<PlusUser>()
-                .setSize(legacyPage.getLimit())
-                .setCurrent(legacyPage.getOffset());
+        LambdaQueryWrapper<PlusUser> qry = new LambdaQueryWrapper<>();
+        qry.orderByAsc(PlusUser::getNo);
 
-        // 쿼리 입출력을 조작하는 부분을 service로 구현하여 재활용
-        Page<PlusUser> page2 = plusService.searchUserList(page1, search);
+        if (search.getNo() > 0) qry.eq(PlusUser::getNo, search.getNo());
+        if (search.getName() != null && !search.getName().isBlank()) qry.like(PlusUser::getName, search.getName());
+        if (search.getStartDate() != null) qry.ge(PlusUser::getRegDate, search.getStartDate());
+        if (search.getEndDate() != null) qry.le(PlusUser::getRegDate, search.getEndDate());
 
-        // page1 과 page2 는 동일한 객체입니다.
-        Assert.isTrue(page1 == page2, "Page1,2 객체가 서로 같지 않습니다.");
+        page = plusMapper.selectPage(page, qry);
 
-        // page1 전체를 넘깁니다. (화면참조)
-        model.addAttribute("page1", page1);
+        model.addAttribute("page", page);
+
+        return "user/plus/UserInfoList";
     }
 
     @GetMapping("user/plus/searchUserListByXmlQuery")
-    public void searchUserListByXmlQuery(Model model) {
-        LegacySearchUserListVO search = (LegacySearchUserListVO) model.getAttribute("searchUser");
+    public String searchUserListByXmlQuery(Model model, @ModelAttribute("page") Page<PlusUser> page, @ModelAttribute("search") LegacySearchUserListVO search) {
 
-        // 복잡한 쿼리는 xml 로 작성하여 Mapper 직접 호출
-        List<PlusUser> userList = plusMapper.searchUserListByXmlQuery(search);
+        search.setEndDate(new Date());
+
+        List<PlusUser> userList = plusMapper.searchUserListByXmlQuery(page, search);
+
         model.addAttribute("searchUserList", userList);
+
+        return "user/plus/UserInfoList";
     }
 }
